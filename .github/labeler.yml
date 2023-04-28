@@ -1,0 +1,19 @@
+# BOF
+# Add 'repo' label to any root file changes
+repo:
+- '*'
+# 
+git:
+- any: ['**/.gitignore']
+#
+workflow:
+- any: ['.github/**/*']
+#
+code:
+- any: ['terraform/**/*']
+#
+documentation:
+- any: ['**/*.md']
+
+...
+# EOF
