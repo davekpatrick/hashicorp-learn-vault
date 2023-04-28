@@ -78,7 +78,7 @@ resource "vault_github_team" "bender" {
   namespace = resource.vault_namespace.default.path
   backend = resource.vault_github_auth_backend.default.id
   team = "bender"
-  policies = [ resource.vault_policy.benderProductionSupport.name ]
+  policies = [ resource.vault_policy.denyBender.name, resource.vault_policy.bender.name ]
 }
 resource "vault_github_team" "fry" {
   namespace = resource.vault_namespace.default.path
@@ -127,15 +127,15 @@ resource "vault_policy" "denyBender" {
   namespace = resource.vault_namespace.default.path
   name = "benderDeny"
   policy = <<EOT
-  path "bender/data/.info"
+  path "/bender/data/.info"
   {
     capabilities = ["deny"]
   }
-  path "bender/data/+/ps"
+  path "/bender/data/+/ps"
   {
     capabilities = ["deny"]
   }
-  path "bender/data/+/ps/*"
+  path "/bender/data/+/ps/*"
   {
     capabilities = ["deny"]
   }
