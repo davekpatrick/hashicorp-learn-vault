@@ -62,6 +62,14 @@ func main() {
 	if returnedSecretValue != token.String() {
 		log.Fatalf("unexpected token value %q retrieved from vault", returnedSecretValue)
 	}
+	// list secrets in the path
+	secret, err := client.Logical().ListWithContext(context, secretEngineName+"/metadata")
+	if err != nil {
+		log.Fatalf("unable to list secrets: %v", err)
+	}
+	for _, key := range secret.Data["keys"].([]interface{}) {
+		log.Printf("key: %v", key)
+	}
 	// all good
 	log.Println("Good Bye!")
 }
